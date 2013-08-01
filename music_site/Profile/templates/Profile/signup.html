@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Signup</title>
+	<head>
+		
+<form method="post">
+	<h2>Signup</h2>	
+	<br>
+	<label> Username
+		<input type="text" name="username" value="{{username}}">
+		<type=text style="color: red">{{username_error}}<br>
+	</label>
+
+	<label> Password
+		<input type="password" name="password" value="{{password}}">
+		<type=text style="color: red">{{pass_error}}<br>
+	</label>
+
+	<label> Verify Password
+		<input type="password" name="verify" value="{{verify}}">
+		<type=text style="color: red">{{ver_error}}<br>
+	</label>
+
+	<label> Email (optional)
+		<input type="text" name="email" value="{{email}}">
+		<type=text style="color: red">{{email_error}}<br>
+	</label>
+	
+	<br>
+	<input type="submit">
+</form>
