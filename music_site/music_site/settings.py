@@ -106,13 +106,30 @@ ROOT_URLCONF = 'music_site.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'music_site.wsgi.application'
-
 TEMPLATE_DIRS = (
     '/home/aaron/music_site_git/music_site/templates',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
+
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.twitter.TwitterBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuthBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'social_auth.backends.google.GoogleBackend',
+    'social_auth.backends.yahoo.YahooBackend',
+    'social_auth.backends.contrib.orkut.OrkutBackend',
+    'social_auth.backends.contrib.foursquare.FoursquareBackend',
+    'social_auth.backends.contrib.github.GithubBackend',
+    'social_auth.backends.contrib.yahoo.YahooOAuthBackend',
+    'social_auth.backends.contrib.readability.ReadabilityBackend',
+    'social_auth.backends.OpenIDBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -125,10 +142,10 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'polls',
     'home',
     'Profile',
     'registration',
+    'social_auth',
 )
 
 # A sample logging configuration. The only tangible logging

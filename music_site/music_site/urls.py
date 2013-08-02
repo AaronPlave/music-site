@@ -4,11 +4,13 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
-# from Auth import views as Auth_views
 from django.contrib.auth.views import login, logout
 
+# from Auth import views as Auth_views
+from registration.views import LoginView, SignupView #LogoutView
+
 #search results
-from home.views import ResultsView, ContactView
+from home.views import ResultsView, ContactView, AboutView
 
 urlpatterns = patterns('',
     # Examples:
@@ -23,7 +25,7 @@ urlpatterns = patterns('',
 
     #Adding namespace here to tell Django which app view to create for 
     #a url when using the {%url% template}
-    url(r'^polls/', include('polls.urls',namespace="polls")),
+    # url(r'^polls/', include('polls.urls',namespace="polls")),
 
 
     #home page for search + login + signup + about, serve that index page.
@@ -36,12 +38,22 @@ urlpatterns = patterns('',
     
     # url(r'^login/',Auth_views.LoginView),
 
-    url(r'^accounts/login/$', login),
+    url(r'^login/$', LoginView),
 
-    url(r'^accounts/logout/$',logout),
+    # url(r'^logout/$',LogoutView),
+
+    url(r'^signup/$',SignupView),
 
     url(r'^contact/$',ContactView),
 
     url(r'^results/$',ResultsView),
+
+    url(r'^about/$', AboutView),
+
+    url(r'^accounts/login/$', login),
+
+    url(r'^accounts/logout/$',logout),
+
+    url(r'', include('social_auth.urls')),
     
 )

@@ -33,3 +33,7 @@ def ProfileView(request):
 		}))
 	return HttpResponse(html)
 
+def EditProfileView(request):
+	t = get_template('Profile/EditProfile.html')
+	html = t.render(Context())
+	return HttpResponse(html)

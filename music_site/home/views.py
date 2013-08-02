@@ -23,6 +23,11 @@ def HomeView(request):
 	html = t.render(Context())
 	return HttpResponse(html)
 
+def AboutView(request):
+	t = get_template('home/about.html')
+	html = t.render(Context())
+	return HttpResponse(html)
+
 def ContactView(request):
 
 	#The c is for csrf stuff 
