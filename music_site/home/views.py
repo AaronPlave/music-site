@@ -1,13 +1,18 @@
 # Create your views here.
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.views import generic
+from django.core.mail import send_mail
 
 from django.template.loader import get_template
 from django.template import Context
 from Profile.models import Profile
+from django.template import RequestContext
+from django.core.context_processors import csrf
+from django.shortcuts import render_to_response
+from home.forms import ContactForm
 
 
 # class HomeView(generic.DetailView):
@@ -17,6 +22,32 @@ def HomeView(request):
 	t = get_template('home/home.html')
 	html = t.render(Context())
 	return HttpResponse(html)
+
+def ContactView(request):
+
+	#The c is for csrf stuff 
+	# c = {}
+	# c.update(csrf(request))
+	errors = []
+	if request.method == 'POST':
+		form = ContactForm(request.POST)
+		if form.is_valid():
+			cd = form.cleaned_data
+
+			#CONFIGURE MAIL SERVER LATER
+			# send_mail(
+   #              cd['subject'],
+   #              cd['message'],
+   #              cd.get('email', 'noreply@example.com'),
+   #              ['siteowner@example.com'],
+   #          )
+			return HttpResponseRedirect('/profile')
+	else:
+		form = ContactForm(
+			initial={'subject':'Ask me your questions three'}) #init message
+		t = get_template('home/contact.html')
+	return render_to_response('home/contact.html',{'form':form},
+								context_instance=RequestContext(request))
 
 def ResultsView(request):
 	"""Landing page for search results"""

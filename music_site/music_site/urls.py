@@ -8,7 +8,7 @@ admin.autodiscover()
 from django.contrib.auth.views import login, logout
 
 #search results
-from home.views import ResultsView
+from home.views import ResultsView, ContactView
 
 urlpatterns = patterns('',
     # Examples:
@@ -40,6 +40,8 @@ urlpatterns = patterns('',
 
     url(r'^accounts/logout/$',logout),
 
-    url(r'^results/$',ResultsView)
+    url(r'^contact/$',ContactView),
+
+    url(r'^results/$',ResultsView),
     
 )
