@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Just Jam</title>
+    <title>About</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap-combined.no-icons.min.css">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css">
@@ -12,13 +12,13 @@
     <link href="http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic" 
 rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,300,400,600,700,800" 
-rel="stylesheet" text="type/css">
+rel="stylesheet" type="text/css">
     <style type="text/css">
 
     /*Large desktop */
     @media (min-width: 980px) {
       body {
-        padding-top: 10%;;
+        padding-top: 60px;
       }
       .linediv-l {
         border-right:1px white solid;
@@ -46,15 +46,11 @@ rel="stylesheet" text="type/css">
     /* Main body and headings */
       body {
         font-family: 'Open Sans',Helvetica,Arial,sans-serif;
-        /*background-image: url(http://s21.postimg.org/ot760yhkl/Spaceflare.jpg);*/
-        /*background-image: url(https://dl.dropboxusercontent.com/u/93928427/Sunset.png);*/
-        background-size: auto auto;
       }
       .heading, .subheading {
         font-family: 'Ubuntu',Helvetica,Arial,sans-serif;
         text-align: center;
       }
-
       p.lead {
         padding-top: 1.5%;
         font-size: 24px;
@@ -97,11 +93,7 @@ rel="stylesheet" text="type/css">
         padding: 2.5% 0%;
       }
       .footer {
-        padding: 2.5% 0%;
         color: #cccccc;
-        position: absolute;
-        bottom: 0;
-        text-align: center;
       }
       .footer p {
         font-size: 11px;
@@ -115,7 +107,7 @@ rel="stylesheet" text="type/css">
 
     </style>
   </head>
-  
+
   <body>
     
     <!-- Mobile-friendly navbar adapted from example. -->
@@ -129,50 +121,27 @@ rel="stylesheet" text="type/css">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">Flavored Wes Jam</a>
+          <a class="brand" href="/">All the Jam</a>
+
+        
+          <form class="navbar-search pull-right" action="/results/" method="get">  
+            <input type="text" class="search-query" name='q'>  
+            <!-- <input type="submit" value="Search" class='btn'> -->
+          </form>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
               <li><a href="/about">About</a></li>
               <li><a href="/contact">Contact</a></li>
+              <li><a href="/sign_up">Sign up,maybe do this as a popup?</a><li> 
             </ul>
           </div> <!--/.nav-collapse-->
         </div>
       </div>
     </div>
+  
 
-    <!-- We use row-fluid inside containers to achieve a resiable layout. -->
-    <!-- blogs.endjin.com/2013/04/tips-for-implementing-responsibe-designs-using-bootstrap/ -->
-    <!-- http://stackoverflow.com/a/12270322 -->
-    <div class="container">
-      <!-- Font and paired font of .heading/.subheading and body from Google Fonts -->
-      <!-- www.google.com/fonts/specimen/Ubuntu -->
-      <!-- www.google.com/fonts/specimen/Ubuntu#pairings -->
-      <div class="row-fluid heading">
-        <div class="span12">
-          <h1>Flavored Wes Jam<h1>
-        </div>
-      </div>
-      <div class="row-fluid subheading">
-        <div class="span12">
-          Sign up, search, and play
-        </div>
-      </div>
-      <div class="row-fluid search">
-        <form class="form-search" action="/results/" method="get">
-          <input type="text" class="input-mysize search-query" name="q" >
-          <input type="submit" value="Search" class="btn"></input>
-        </form>
-      </div>
-    </div>
-    
-    <div class="container">
-      <div class="row-fluid footer">
-        <div class="span12">
-          <p>This work is licensed under the <a href="http://creativecommons.org/licensed/by-sa/3.0/">CC By-SA 3.0
-          </a>,without all the cruft that would otherwise be put at the bottom of the page.</p>
-        </div>
-      </div>
-    </div>
+
+
   </body>
 </html>

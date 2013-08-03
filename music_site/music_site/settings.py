@@ -1,5 +1,8 @@
 # Django settings for music_site project.
 
+# import os
+
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -120,14 +123,71 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.google.GoogleOAuth2Backend',
     'social_auth.backends.google.GoogleBackend',
     'social_auth.backends.yahoo.YahooBackend',
-    'social_auth.backends.contrib.orkut.OrkutBackend',
-    'social_auth.backends.contrib.foursquare.FoursquareBackend',
+    'social_auth.backends.stripe.StripeBackend',
+    'social_auth.backends.contrib.linkedin.LinkedinBackend',
+    'social_auth.backends.contrib.skyrock.SkyrockBackend',
+    'social_auth.backends.contrib.flickr.FlickrBackend',
+    'social_auth.backends.contrib.instagram.InstagramBackend',
     'social_auth.backends.contrib.github.GithubBackend',
+    'social_auth.backends.contrib.yandex.YandexBackend',
+    'social_auth.backends.contrib.disqus.DisqusBackend',
     'social_auth.backends.contrib.yahoo.YahooOAuthBackend',
-    'social_auth.backends.contrib.readability.ReadabilityBackend',
+    'social_auth.backends.contrib.foursquare.FoursquareBackend',
     'social_auth.backends.OpenIDBackend',
+    'social_auth.backends.contrib.live.LiveBackend',
+    'social_auth.backends.contrib.livejournal.LiveJournalBackend',
+    'social_auth.backends.contrib.douban.DoubanBackend',
+    'social_auth.backends.browserid.BrowserIDBackend',
+    'social_auth.backends.contrib.vk.VKOpenAPIBackend',
+    'social_auth.backends.contrib.yandex.YandexOAuth2Backend',
+    'social_auth.backends.contrib.yandex.YaruBackend',
+    'social_auth.backends.contrib.odnoklassniki.OdnoklassnikiBackend',
+    'social_auth.backends.contrib.odnoklassniki.OdnoklassnikiAppBackend',
+    'social_auth.backends.contrib.vk.VKOAuth2Backend',
+    'social_auth.backends.contrib.mailru.MailruBackend',
+    'social_auth.backends.contrib.dailymotion.DailymotionBackend',
+    'social_auth.backends.contrib.shopify.ShopifyBackend',
+    'social_auth.backends.contrib.exacttarget.ExactTargetBackend',
+    'social_auth.backends.contrib.stocktwits.StocktwitsBackend',
+    'social_auth.backends.contrib.behance.BehanceBackend',
+    'social_auth.backends.contrib.readability.ReadabilityBackend',
+    'social_auth.backends.contrib.fedora.FedoraBackend',
+    'social_auth.backends.steam.SteamBackend',
+    'social_auth.backends.reddit.RedditBackend',
+    'social_auth.backends.amazon.AmazonBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+# TEMPLATE_CONTEXT_PROCESSORS = (
+#     'django.contrib.auth.context_processors.auth',
+#     'social_auth.context_processsors.social_auth_by_type_backends',
+# )
+
+SOCIAL_AUTH_ENABLED_BACKENDS = ('github',) 
+SOCIAL_ATH_DEFAULT_USERNAME = 'new_social_auth_user' #default user
+
+# GITHUB_APP_ID = os.environ['GITHUB_APP_ID']
+# GITHUP_API_SECRET = os.environ['GITHUB_APP_SECRET']
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/private/' #setup so have to be auth to see page
+LOGIN_ERROR_URL = '/login-error/'
+
+#WHAT IS THIS?
+# SOCIAL_AUTH_PIPELINE = (
+#     'social_auth.backends.pipeline.social.social_auth_user',
+#     'social_auth.backends.pipeline.associate.associate_by_email',
+#     'social_auth.backends.pipeline.misc.save_status_to_session',
+#     'app.pipeline.redirect_to_form',
+#     'app.pipeline.username',
+#     'social_auth.backends.pipeline.user.create_user',
+#     'social_auth.backends.pipeline.social.associate_user',
+#     'social_auth.backends.pipeline.social.load_extra_data',
+#     'social_auth.backends.pipeline.user.update_user_details',
+#     'social_auth.backends.pipeline.misc.save_status_to_session',
+#     'app.pipeline.redirect_to_form2',
+#     'app.pipeline.first_name',
+# )
 
 
 
@@ -141,11 +201,12 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'django.contrib.admindocs',
     'home',
     'Profile',
     'registration',
-    'social_auth',
+    # 'south',
+    # 'social_auth',
 )
 
 # A sample logging configuration. The only tangible logging

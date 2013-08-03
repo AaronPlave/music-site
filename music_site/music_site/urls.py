@@ -12,6 +12,12 @@ from registration.views import LoginView, SignupView #LogoutView
 #search results
 from home.views import ResultsView, ContactView, AboutView
 
+#used in social-auth
+# from django.views.generic.simple import redirect_to
+
+
+
+
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'music_site.views.home', name='home'),
@@ -50,10 +56,11 @@ urlpatterns = patterns('',
 
     url(r'^about/$', AboutView),
 
-    url(r'^accounts/login/$', login),
+    #for every service you use, the login/**** is what you go to for our app to know which service to use
+    # url(r'^login/$', redirect_to, {'url':'/login/github'}), 
 
-    url(r'^accounts/logout/$',logout),
+    # url(r'^accounts/logout/$',logout),
 
-    url(r'', include('social_auth.urls')),
+    # url(r'', include('social_auth.urls')),
     
 )

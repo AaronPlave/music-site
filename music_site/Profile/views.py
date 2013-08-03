@@ -18,18 +18,20 @@ from Profile.models import Profile
 
 def ProfileView(request):
 	t = get_template('Profile/Profile.html')
-	person = Profile.objects.get(user_id=0)
-	user_id,location,email,quote = person.user_id,\
+
+	##GET THIS FROM USER LOGIN ID
+	person = Profile.objects.filter(location='Wesleyan')
+	user_id,location,email = person.user_id,\
 								 person.location, \
 								 person.email,\
-								 person.quote
+								 # person.quote
 	html = t.render(Context({
 		'first_name': "Aaron",
 		'last_name': "Plave",
 		'user_id': user_id,
 		'location': location,
 		'email':email,
-		'quote':quote
+		'quote':"quote"
 		}))
 	return HttpResponse(html)
 
