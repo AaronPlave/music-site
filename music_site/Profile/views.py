@@ -7,7 +7,8 @@ from django.views import generic
 
 from django.template.loader import get_template
 from django.template import Context
-from Profile.models import Profile
+from Profile.models import Profile, Genre
+from registration.models import Temp_User
 
 #show email only if logged in, "sign in to contact"
 
@@ -20,18 +21,26 @@ def ProfileView(request):
 	t = get_template('Profile/Profile.html')
 
 	##GET THIS FROM USER LOGIN ID
-	person = Profile.objects.filter(location='Wesleyan')
-	user_id,location,email = person.user_id,\
-								 person.location, \
-								 person.email,\
-								 # person.quote
+	
+	#grabs first user in location
+	p = Profile
+	person = p.objects.filter(location='Wesleyan')[0]
+
+	#grabs by User by first_name!!!
+	#get username/id/whatever from request
+	name = "Aaron"
+	user = Temp_User.objects.filter(first_name=name)[0]
+	person = Profile.objects.filter(User=user)[0]
+	genres = person.genre.all()
+
+	# User,location = person.User,person,location
+
 	html = t.render(Context({
-		'first_name': "Aaron",
-		'last_name': "Plave",
-		'user_id': user_id,
-		'location': location,
-		'email':email,
-		'quote':"quote"
+		'first_name': user.first_name,
+		'last_name': user.last_name,
+		'location': person.location,
+		'genres': genres,
+		'quote':"quote",
 		}))
 	return HttpResponse(html)
 

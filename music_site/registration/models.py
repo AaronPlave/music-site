@@ -9,4 +9,4 @@ class Temp_User(models.Model):
 )	# NEED PROFILE IMAGE WITH REAL DEAL IF POSSIBLE
 
 	def __unicode__(self):
-		return self.first_name
+		return unicode(self.first_name) #,unicode(self.last_name),unicode(self.email)

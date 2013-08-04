@@ -6,11 +6,19 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
+from registration.models import Temp_User
+from Profile.models import Genre
+import csv
 
+class Populate_DB():
+    def Pop_DB(self):
+        """
+        Populates User and Profile DBs.
+        """
+        fields = ['first_name','last_name','email']
+        for row in csv.reader(open('/home/aaron/music_site_git/music_site/music_site/User_DB.csv')):
+        	Temp_User.objects.create(**dict(zip(fields,row)))
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+        fields = ['name']
+        for row in csv.reader(open('/home/aaron/music_site_git/music_site/music_site/Genre_DB.csv')):
+        	Genre.objects.create(**dict(zip(fields,row)))

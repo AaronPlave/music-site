@@ -65,6 +65,8 @@ def ResultsView(request):
 		if len(q) > 30:
 			message = "Search query too long, try a shorter query."
 			return HttpResponse(message)
+
+			
 		#Obviously make this search better
 		results = Profile.objects.filter(location__icontains=q)
 		html = t.render(Context({'results':results,'query':q}))

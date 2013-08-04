@@ -157,7 +157,7 @@ rel="stylesheet" type="text/css">
       <!-- www.google.com/fonts/specimen/Ubuntu#pairings -->
       <div class="row-fluid heading">
         <div class="span12">
-          <h1>{{ first_name }} {{last_name}} {{user_id}} {{location}} {{email}}<h1>
+          <h1>{{ first_name }} {{last_name}} {{location}} {{email}} <h1>
         </div>
       </div>
       <div class="row-fluid subheading">
@@ -174,21 +174,24 @@ rel="stylesheet" type="text/css">
         <img class="img-polaroid" src="http://placehold.it/480x300">
       </div>
       <div class="span5 asset">
-        <table class="table table-striped">
-          <caption>Where the info shit goes</caption>
-          <thread>
-            <tr>
-              <th>Instrument</th>
-              <th>Genres</th>
-            </tr>
-          </thread>
-          <tbody>
-            <tr>
-              <td>Sax, Piano</td>
-              <td>Jazz-ish stuff</td>
-            </tr>
-          </tbody>
-        </table>
+        {% if genres %}
+            <table class="table table-striped">
+              <thread>
+                <tr>
+                  <th>Genres{{ genre|pluralize}}</th>
+                </tr>
+              </thread>
+              <tbody>
+              {% for genre in genres %}
+                <tr>
+                  <td>{{ genre }}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+      {% else %}
+        <p>No genres.</p>
+      {% endif %}
       </div>
     </div>
 
