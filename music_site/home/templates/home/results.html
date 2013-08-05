@@ -179,18 +179,16 @@
 			{% if results %}
 			<p>Found {{ results|length }} result{{ results|pluralize }}.</p>
 				<table class="table table-striped">
-					<thread>td
+					<thread>
 						<tr>
-							<th>First Name</th>
-							<th>Last Name</th>
+							<th>Name</th>
 							<th>Location</th>
 						</tr>
 					</thread>
 					<tbody>
 					{% for result in results %}
 						<tr>
-							<td>{{ result.User.first_name}}</td>
-							<td>{{result.User.last_name}}</td>
+							<td><a href="/profile/{{result.User.pk}}">{{ result.User.first_name}} {{result.User.last_name}}</li></td>
 							<td>{{ result.location }}</td>
 						</tr>
 					{% endfor %}

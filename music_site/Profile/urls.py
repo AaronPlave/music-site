@@ -8,6 +8,6 @@ from Profile import views
 
 urlpatterns = patterns('',
 	#ex: /polls/
-	url(r'^$',views.ProfileView,name='Profile'),
+	url(r'^(?P<pk>\d+)/$',views.ProfileView,name='Profile'),
 	url(r'^edit/$', views.EditProfileView,name="EditProfile")
 	)

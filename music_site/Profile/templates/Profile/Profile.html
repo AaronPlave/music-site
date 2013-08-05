@@ -209,15 +209,39 @@ rel="stylesheet" type="text/css">
               {% endfor %}
               </tbody>
             </table>
-      {% else %}
-        <p>No genres.</p>
-      {% endif %}
+        {% else %}
+          <p>No genres.</p>
+        {% endif %}
+      </div>
+      <div class="span5 asset">
+        <table class="table table-striped">
+          <thread>
+            <tr>
+             <th>Instrument{{ instruments|pluralize}}</th>
+            </tr>
+          </thread>
+          <tbody>
+          {% for instrument in instruments %}
+            <tr>
+              <td>{{ instrument }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>                          
       </div>
     </div>
 
     <div class="container">
       <div class="span5 asset">
-        {{ soundcloud|safe }}
+        {% if soundcloud %}
+          {% for embed in soundcloud %}
+            <div>
+              {{ embed | safe }}
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>No soundcloud links yet, add some!</p>
+        {% endif %}
       </div>
     </div>
 

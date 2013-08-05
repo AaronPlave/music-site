@@ -14,9 +14,10 @@ class Genre(models.Model):
 class SoundCloud(models.Model):
 	#Assumes all urls are valid
 	url = models.CharField(max_length=300)
+	owner = models.ForeignKey('Profile')
 
 	def __unicode__(self):
-		return unicode(self.urls)
+		return unicode(self.url)
 
 class Instruments(models.Model):
 	name = models.CharField(max_length=100)
@@ -32,7 +33,6 @@ class Profile(models.Model):
 	instruments = models.ManyToManyField(Instruments)
 	location = models.CharField(max_length=35)
 	quote = models.TextField(max_length=140)
-	soundcloud_links = models.ForeignKey(SoundCloud)
 
 	def __unicode__(self):
 		return unicode(self.User)
