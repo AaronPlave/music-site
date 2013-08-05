@@ -64,3 +64,5 @@ urlpatterns = patterns('',
     # url(r'', include('social_auth.urls')),
     
 )
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+urlpatterns += staticfiles_urlpatterns()

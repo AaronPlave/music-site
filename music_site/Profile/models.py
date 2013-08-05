@@ -11,18 +11,28 @@ class Genre(models.Model):
 	def __unicode__(self):
 		return unicode(self.name)
 
-class Profile(models.Model): #CARS
-	# genre_choices = ('Jazz','Classical','Techno','Indie','ETC')
-	# Person = models.CharField(max_length=30) #what do I name this?
+class SoundCloud(models.Model):
+	#Assumes all urls are valid
+	url = models.CharField(max_length=300)
+
+	def __unicode__(self):
+		return unicode(self.urls)
+
+class Instruments(models.Model):
+	name = models.CharField(max_length=100)
+
+	def __unicode__(self):
+		return unicode(self.name)
+
+class Profile(models.Model):
+
+	#User gives first, last name, real email(?)
 	User = models.OneToOneField(Temp_User,primary_key=True)
 	genre = models.ManyToManyField(Genre)
-
-	# instruments = models.StringListField()
-	# genres = models.StringListField()
+	instruments = models.ManyToManyField(Instruments)
 	location = models.CharField(max_length=35)
-	# email = models.CharField(max_length=75,blank=True)
-	# quote = models.TextField(max_length=140)
-	# soundcloud_links=  models.StringListField()
+	quote = models.TextField(max_length=140)
+	soundcloud_links = models.ForeignKey(SoundCloud)
 
 	def __unicode__(self):
 		return unicode(self.User)

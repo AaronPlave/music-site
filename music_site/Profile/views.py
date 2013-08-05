@@ -10,6 +10,8 @@ from django.template import Context
 from Profile.models import Profile, Genre
 from registration.models import Temp_User
 
+import soundcloud
+
 #show email only if logged in, "sign in to contact"
 
 ##steps for adding column:
@@ -32,7 +34,8 @@ def ProfileView(request):
 	user = Temp_User.objects.filter(first_name=name)[0]
 	person = Profile.objects.filter(User=user)[0]
 	genres = person.genre.all()
-
+	soundcloud_embed = SoundCloud('https://soundcloud.com/serious-url/cut-to-black-1')
+	print soundcloud_embed
 	# User,location = person.User,person,location
 
 	html = t.render(Context({
@@ -41,6 +44,7 @@ def ProfileView(request):
 		'location': person.location,
 		'genres': genres,
 		'quote':"quote",
+		'soundcloud':soundcloud_embed,
 		}))
 	return HttpResponse(html)
 
@@ -48,3 +52,10 @@ def EditProfileView(request):
 	t = get_template('Profile/EditProfile.html')
 	html = t.render(Context())
 	return HttpResponse(html)
+
+def SoundCloud(plain_url):
+	client = soundcloud.Client(client_id="858c98ac9ee828617aa6a2364d5b0b0a")
+	track_url = client.get('/resolve',url='https://soundcloud.com/serious-url/cut-to-black-1')
+	embed_info = client.get('/oembed',url=track_url.url)
+	print embed_info.html
+	return embed_info.html
