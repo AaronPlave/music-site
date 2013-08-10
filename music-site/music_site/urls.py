@@ -10,11 +10,12 @@ from django.contrib.auth.views import login, logout
 from registration.views import LoginView, SignupView #LogoutView
 
 #search results
-from home.views import ResultsView, ContactView, AboutView
+from home.views import ResultsView, ContactView, AboutView, BaseView
 
 #used in social-auth
 from django.views.generic import RedirectView
 
+from home.views import form2
 
 
 urlpatterns = patterns('',
@@ -61,6 +62,8 @@ urlpatterns = patterns('',
     # url(r'^accounts/logout/$',logout),
 
     url(r'', include('social_auth.urls')),
+    url(r'^form2/$', form2, name='form2'),
+    url(r'^base/$',BaseView)
     
 )
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns

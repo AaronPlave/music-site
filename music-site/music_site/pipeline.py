@@ -17,7 +17,7 @@ def username(request, *args, **kwargs):
 
 def redirect_to_form2(*args, **kwargs):
     if not kwargs['request'].session.get('saved_first_name'):
-        return HttpResponseRedirect('/contact') #just for testing
+        return HttpResponseRedirect('/form2') #just for testing
 
 
 def first_name(request, *args, **kwargs):

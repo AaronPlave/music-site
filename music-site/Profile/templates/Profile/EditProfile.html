@@ -4,15 +4,19 @@
     <meta charset="utf-8">
     <title>Edit Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap-combined.no-icons.min.css">
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css">
-    <link rel="stylesheet" href="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fsocial-buttons.css">
-    <script src="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fjquery.js"></script>
-    <script src="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap.js"></script>
-    <link href="http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic" 
-rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,300,400,600,700,800" 
-rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/static/music_site/BS2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/music_site/font-awesome/css/font-awesome.css">
+    <!-- <link rel="stylesheet" href="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fsocial-buttons.css"> -->
+
+
+
+    <!-- soundcloud stuff -->
+    <!-- <link rel="stylesheet" href="/static/music_site/soundcloud-custom-player-master/css/sc-player-standard.css" type="text/css"> -->
+    
+   <script src="/static/music_site/jquery.js"></script>
+    <script src="/static/music_site/BS2/js/bootstrap.js"></script>
+    <link href="http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,300,400,600,700,800"rel="stylesheet" type="text/css">
     <style type="text/css">
 
     /*Large desktop */
@@ -112,36 +116,79 @@ rel="stylesheet" type="text/css">
     
     <!-- Mobile-friendly navbar adapted from example. -->
     <!-- http://twitter.github.io/bootstrap/examples/starter-template.html -->
-    <div class ="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" 
-                  data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="/">Wes Jam</a>
+    <div class="container">
+      <div class ="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <button type="button" class="btn btn-navbar" 
+                    data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="/">Wes Jam</a>
 
-        
-          <form class="navbar-search pull-right" action="/results/" method="get">  
-            <input type="text" class="search-query" name='q'>  
-            <!-- <input type="submit" value="Search" class='btn'> -->
-          </form>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="/about">About</a></li>
-              <li><a href="/contact">Contact</a></li>
-              <li><a href="/sign_up">Sign up,maybe do this as a popup?</a><li> 
-            </ul>
-          </div> <!--/.nav-collapse-->
+          
+            <form class="navbar-search pull-right" action="/results/" method="get">  
+              <input type="text" class="search-query" name='q'>  
+              <!-- <input type="submit" value="Search" class='btn'> -->
+            </form>
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/sign_up">Sign up,maybe do this as a popup?</a><li> 
+              </ul>
+            </div> <!--/.nav-collapse-->
+          </div>
         </div>
       </div>
     </div>
-  
 
-
-
+    <div class="container">
+      <div class="span5 offset3">
+        <div class="well">
+          <form action="" method="post">
+            <div class="field">
+              {{ form.first_name.errors }}
+              <label for="id_first_name">First Name:</label>
+              {{ form.first_name }}
+            </div>
+            <div class="field">
+              {{ form.last_name.errors }}
+              <label for="id_last_name">Last Name:</label>
+              {{ form.last_name }}
+            </div>
+            <div class="field">
+              {{ form.location.errors }}
+              <label for="id_message">Location:</label>
+              {{ form.location }}
+            </div>
+            <div class="field">
+              {{ form.genres.errors }}
+              <label for="id_message">Genres:</label>
+              {{ form.genres }}
+            </div>
+            <div class="field">
+              {{ form.instruments.errors }}
+              <label for="id_message">Instruments:</label>
+              {{ form.instruments }}
+            </div>
+            <div class="field">
+              {{ form.sc_links.errors }}
+              <label for="id_message">Soundcloud Links:</label>
+              {{ form.sc_links }}
+            </div>
+            <div class="field">
+              {{ form.quote.errors }}
+              <label for="id_message">Quote:</label>
+              {{ form.quote }}
+            </div>
+            {% csrf_token %}
+            <input type="submit" value="Submit">
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

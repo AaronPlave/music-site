@@ -14,6 +14,16 @@ from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 from home.forms import ContactForm
 
+from django.http import HttpResponseRedirect
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.decorators import login_required
+from django.template import RequestContext
+from django.shortcuts import render_to_response, redirect
+from django.contrib.messages.api import get_messages
+
+from social_auth import __version__ as version
+from social_auth.utils import setting
+
 
 # class HomeView(generic.DetailView):
 #     template_name = 'home/home.html'
@@ -22,6 +32,12 @@ def HomeView(request):
 	t = get_template('home/home.html')
 	html = t.render(Context())
 	return HttpResponse(html)
+
+def BaseView(request):
+	t = get_template('home/base.html')
+	html = t.render(Context())
+	return HttpResponse(html)
+
 
 def AboutView(request):
 	t = get_template('home/about.html')
@@ -89,3 +105,12 @@ def ResultsView(request):
 # {% if error %}
 #         <p style="color: red;">Please submit a search term.</p>
 #     {% endif %}
+
+
+def form2(request):
+	if request.method == 'POST' and request.POST.get('first_name'):
+	    request.session['saved_first_name'] = request.POST['first_name']
+	    name = setting('SOCIAL_AUTH_PARTIAL_PIPELINE_KEY', 'partial_pipeline')
+	    backend = request.session[name]['backend']
+	    return redirect('socialauth_complete', backend=backend)
+	return render_to_response('home/form2.html', {}, RequestContext(request))

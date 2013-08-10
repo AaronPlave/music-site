@@ -1,5 +1,6 @@
 from django.db import models
 from registration.models import Temp_User
+from django.contrib.auth.models import User
 
 
 #ID link to Users DB is created when you create the profile, 
@@ -28,7 +29,7 @@ class Instruments(models.Model):
 class Profile(models.Model):
 
 	#User gives first, last name, real email(?)
-	User = models.OneToOneField(Temp_User,primary_key=True)
+	User = models.OneToOneField(User,primary_key=True)
 	genre = models.ManyToManyField(Genre)
 	instruments = models.ManyToManyField(Instruments)
 	location = models.CharField(max_length=35)

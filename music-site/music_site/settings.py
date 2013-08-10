@@ -132,7 +132,7 @@ TEMPLATE_DIRS = (
 AUTHENTICATION_BACKENDS = (
     # 'social_auth.backends.twitter.TwitterBackend',
     'social_auth.backends.facebook.FacebookBackend',
-    'social_auth.backends.google.GoogleOAuthBackend',
+    # 'social_auth.backends.google.GoogleOAuthBackend',
     'social_auth.backends.google.GoogleOAuth2Backend',
     'social_auth.backends.google.GoogleBackend',
     'social_auth.backends.yahoo.YahooBackend',
@@ -190,13 +190,10 @@ except:
     print "COULDN'T IMPORT LOCAL_SETTINGS"
     pass
 
-FACEBOOK_APP_ID         = '287004661441854'
-FACEBOOK_API_SECRET     = '1783fa89b1bda57adfa1c56f2793eb2e'
-
-
 
 SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
 SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
+
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/' #setup so have to be auth to see page
@@ -233,7 +230,6 @@ INSTALLED_APPS = (
     'home',
     'Profile',
     'registration',
-    # 'south',
     'social_auth',
 )
 
