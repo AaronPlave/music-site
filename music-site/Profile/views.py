@@ -87,7 +87,7 @@ def EditProfileView(request,pk): #secure way to do this?
 	else:
 		#these next two lines are quite silly, i'm sure there's a way to do this
 		genre_list = [str(g.name) for g in genres]
-		instrument_list = [str(i.name for i in instruments]
+		instrument_list = [str(i.name) for i in instruments]
 		form = EditProfileForm(
 			initial={'first_name': user.first_name,
 					'last_name': user.last_name,
