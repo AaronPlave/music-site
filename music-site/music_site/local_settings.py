@@ -1,3 +1,4 @@
+#GET NEW ONES BEFORE YOU GO LIVE!!!!!!!###############3
 TWITTER_CONSUMER_KEY              = ''
 TWITTER_CONSUMER_SECRET           = ''
 FACEBOOK_APP_ID                   = '287004661441854'

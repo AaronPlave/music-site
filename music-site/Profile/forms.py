@@ -17,14 +17,18 @@ class EditProfileForm(forms.Form):
 		If any such method exists, it's called during validation.
 		"""
 		first_name = self.cleaned_data['first_name']
+		return first_name
 
 	def clean_last_name(self):
 		last_name = self.cleaned_data['last_name']
+		return last_name
 
 	def clean_location(self):
 		location = self.cleaned_data['location']
+		return location
 	
 	def clean_genres(self):
+		genres = self.cleaned_data['genres']
 		genres = self.cleaned_data['genres']
 
 		#check for genres, BEST WAY TO REFERENCE DB? OK, maybe have a search bar, 
@@ -32,12 +36,10 @@ class EditProfileForm(forms.Form):
 		# maybe have a "did you mean"/include this in the autocomplete 
 		genre_list = genres.split()
 		db_genres = ['Jazz','Classical','Rock'] #get from db, but cache list
-		print genre_list
 		for g in genre_list:
 			if g not in db_genres:
-				print g == db_genres[0]
-				print "Not in db"
 				raise forms.ValidationError("NOT IN DB!")
+		return genre_list
 
 	def clean_instruments(self):
 		instruments = self.cleaned_data['instruments']
@@ -51,6 +53,7 @@ class EditProfileForm(forms.Form):
 			if g not in db_instruments:
 				print "Not in db"
 				raise forms.ValidationError("NOT IN DB!")
+		return instrument_list
 
 	def clean_sc_links(self):
 		sc_links = self.cleaned_data['sc_links']
@@ -58,17 +61,8 @@ class EditProfileForm(forms.Form):
 		sc = SC_Embed(sc_list)
 		if sc[0] == False:
 			raise forms.ValidationError(str(sc[1]) + " cannot be processed.")
+		return sc_list
+
 	def clean_quote(self):
 		quote = self.cleaned_data['quote']
-			
-
-
-
-		# return {"first_name":first_name,
-		# 		"last_name":last_name,
-		# 		"location":location,
-		# 		"genres":genre_list,
-		# 		"instruments":instrument_list,
-		# 		"sc_list":sc_list,
-		# 		"quote":quote
-		# 		}
+		return quote

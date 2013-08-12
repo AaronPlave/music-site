@@ -9,7 +9,7 @@ from django.template.loader import get_template
 from django.template import Context
 from Profile.models import Profile, Genre, Instruments
 from Profile.models import SoundCloud as SC
-from registration.models import Temp_User
+from django.contrib.auth.models import User
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from Profile.forms import EditProfileForm
@@ -28,12 +28,12 @@ def ProfileView(request,pk):
 	##GET THIS FROM USER LOGIN ID
 	
 	#grabs first user in location
-	p = Profile
-	person = p.objects.filter(location='Wesleyan')[0]
+	# p = Profile
+	# person = p.objects.filter(location='Wesleyan')[0]
 
 	#grabs by User by first_name!!!
 	#get username/id/whatever from request
-	user = Temp_User.objects.filter(pk=pk)[0]
+	user = User.objects.filter(pk=pk)[0]
 	person = Profile.objects.filter(User=user)[0]
 	genres = person.genre.all()
 	instruments = person.instruments.all()
@@ -54,24 +54,48 @@ def ProfileView(request,pk):
 	return HttpResponse(html)
 
 def EditProfileView(request,pk): #secure way to do this?
-	user = Temp_User.objects.filter(pk=pk)[0]
-	person = Profile.objects.filter(User=user)[0]		
+	user = User.objects.filter(pk=pk)[0]
+	person = Profile.objects.filter(User=user)[0]
+	genres = person.genre.all()
+	instruments = person.instruments.all()
+	sc_urls = person.soundcloud_set.all()
+	embed_lst = SC_Embed(sc_urls)[1]
 	#form checking
 	errors = []
 	if request.method == 'POST':
 		print "POST"
 		form = EditProfileForm(request.POST)
 		if form.is_valid():
-			cd = form.cleaned_first_name
+			cd = form.cleaned_data
 			print cd
 			#NOW UPDATE PROFILE DATABASE
-			return HttpResponseRedirect('/')
+
+			user.first_name = cd['first_name']
+			user.last_name = cd['last_name']
+			person.location = cd['location']
+			print person.genre.all()
+			# person.genre = cd['genres'] #hmm.. might not work
+			# person.instruments = cd['instruments']
+			# person.soundcloud_set = cd['sc_links']
+			person.quote = cd['quote']
+			user.save()
+			person.save()
+
+			return HttpResponseRedirect('/profile/'+str(pk))
 		else:
 			print "no"
 	else:
+		#these next two lines are quite silly, i'm sure there's a way to do this
+		genre_list = [str(g.name) for g in genres]
+		instrument_list = [str(i.name for i in instruments]
 		form = EditProfileForm(
-			initial={'first_name':'DB_FIRST_NAME',
-					 'last_name':'DB_LAST_NAME'}) #init fields, grab from db
+			initial={'first_name': user.first_name,
+					'last_name': user.last_name,
+					'location': person.location,
+					'genres': genre_list,
+					'instruments':instrument_list,
+					'quote':person.quote,
+					'soundcloud':embed_lst,}) #init fields, grab from db, from cache later
 	return render_to_response('Profile/EditProfile.html',{'form':form},
 								context_instance=RequestContext(request))
 
