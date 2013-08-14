@@ -1,0 +1,93 @@
+{% extends "site/base.html" %}
+
+{% block import %}
+    <link rel="stylesheet" href="/static/music_site/DataTables-1.9.4/media/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="/static/music_site/DataTables-1.9.4/media/css/demo_page.css">
+    <!-- <scrpt type="text/javascript" language="javascript" src="/static/music_site//home/aaron/music_site_git/music-site/static/music_site/DataTables-1.9.4/media/js/jquery.js"></script> -->
+    <script type="text/javascript" language="javascript" src="/static/music_site/DataTables-1.9.4/media/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf-8">
+            $(document).ready(function() {
+                $('#example').dataTable();
+            } );
+    </script>
+
+
+{% endblock import %}
+    
+
+{% block title %}Search Results{% endblock title %}
+
+{% block css %}
+    .results {
+            font-family: 'Ubuntu',Helvetica,Arial,sans-serif;
+            text-align: center;
+            border-radius: 
+{% endblock css %}
+
+
+{% block content %}
+
+    {% block nav-search %}{% endblock nav-search %}
+
+    
+
+    <div class="container fluid">
+        <div class="span12">    
+            <h1>Search</h1>
+                <div class="well">
+                <form method="get" action=".">
+                    <table cellpadding="0" cellspacing="0" border="0" class="display" id="results" width="100%">
+                        {{ form.as_table }}
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>
+                                <input type="submit" value="Search">
+                            </th>
+                        </tr>
+                    </table>
+
+                    {% if query %}
+                        <h3>Found {{ page.object_list|length }} result{{ page.object_list|pluralize }}.</h3>
+                        <div id="container">
+        
+            
+
+                        <table cellpadding="0" cellspacing="0" border="0" class="display" id="example" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Location</th>
+                                    <th>Genres</th>
+                                    <th>Instruments</th>
+                                </tr>
+                            </thead>
+                            <tbody>  
+                            {% for result in page.object_list %}
+                                <tr>
+                                    <td><a href="/profile/{{result.object.User.pk}}">{{ result.object.User.get_full_name }}</a></th>
+                                    <td>{{ result.location }}</td>
+                                    <td>{{ result.object.genre.all }}</td>
+                                    <td>{{ result.object.instruments.all }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {% if page.has_previous or page.has_next %}
+                        <div>
+                            {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+                            |
+                            {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+                        </div>
+                    {% endif %}
+                    {% else %}
+                        {# Show some example queries to run, maybe query syntax, something else? #}
+                    {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

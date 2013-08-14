@@ -1,0 +1,6 @@
+{{ object.User.first_name }}
+{{ object.User.last_name }}
+{{ object.User.get_full_name }}
+{{ object.location }}
+{{ object.genre.all }}
+{{ object.instruments.all }}
