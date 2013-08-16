@@ -14,6 +14,8 @@ from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from Profile.forms import EditProfileForm
 from music_site.soundcloud_api import SC_Embed
+import json
+from django.shortcuts import render
 
 #show email only if logged in, "sign in to contact"
 
@@ -23,15 +25,10 @@ from music_site.soundcloud_api import SC_Embed
 # ALTER TABLE Profile_profile ADD COLUMN (var_name) integer;
 
 def ProfileView(request,pk):
-	t = get_template('Profile/Profile.html')
+	# t = get_template('Profile/Profile.html')
 
 	##GET THIS FROM USER LOGIN ID
-	
-	#grabs first user in location
-	# p = Profile
-	# person = p.objects.filter(location='Wesleyan')[0]
 
-	#grabs by User by first_name!!!
 	#get username/id/whatever from request
 	user = User.objects.filter(pk=pk)[0]
 	person = Profile.objects.filter(User=user)[0]
@@ -39,9 +36,22 @@ def ProfileView(request,pk):
 	instruments = person.instruments.all()
 	sc_urls = person.soundcloud_set.all()
 	embed_lst = SC_Embed(sc_urls)[1] #DEFINITELY CACHE THIS
-	# User,location = person.User,person,location
 
-	html = t.render(Context({
+	print request.user.is_authenticated()
+
+	#Check if user is owner of this Profile
+	if request.user.is_authenticated():
+		print user.email,request.user.email
+		if user.email == request.user.email:
+			print "same"
+			request.user.owner = True
+
+			#grab profile picture
+			provider = request.session['social_auth_last_login_backend']
+			print provider
+			picture =  request.user.social_auth.get(provider=provider).extra_data['profile']
+
+	return render(request,"Profile/Profile.html",{
 		'first_name': user.first_name,
 		'last_name': user.last_name,
 		'location': person.location,
@@ -50,16 +60,20 @@ def ProfileView(request,pk):
 		'quote':person.quote,
 		'soundcloud':embed_lst,
 		'pk':pk,
-		}))
-	return HttpResponse(html)
+		'picture_url':picture,
+	})
 
 def EditProfileView(request,pk): #secure way to do this?
 	user = User.objects.filter(pk=pk)[0]
 	person = Profile.objects.filter(User=user)[0]
-	genres = person.genre.all()
+	genre_list = person.genre.values_list('name')
+	genre_dict = {}
+	for g in genre_list:
+		genre_dict
 	instruments = person.instruments.all()
 	sc_urls = person.soundcloud_set.all()
 	embed_lst = SC_Embed(sc_urls)[1]
+
 	#form checking
 	errors = []
 	if request.method == 'POST':
@@ -68,13 +82,12 @@ def EditProfileView(request,pk): #secure way to do this?
 		if form.is_valid():
 			cd = form.cleaned_data
 			print cd
-			#NOW UPDATE PROFILE DATABASE
 
 			user.first_name = cd['first_name']
 			user.last_name = cd['last_name']
 			person.location = cd['location']
-			print person.genre.all()
-			# person.genre = cd['genres'] #hmm.. might not work
+
+			# person.genre = cd['genres'] #hmm.. how..
 			# person.instruments = cd['instruments']
 			# person.soundcloud_set = cd['sc_links']
 			person.quote = cd['quote']
@@ -86,23 +99,19 @@ def EditProfileView(request,pk): #secure way to do this?
 			print "no"
 	else:
 		#these next two lines are quite silly, i'm sure there's a way to do this
-		genre_list = [str(g.name) for g in genres]
 		instrument_list = [str(i.name) for i in instruments]
+		print len(genre_list),genre_list
+		for i in genre_list: print i
 		form = EditProfileForm(
 			initial={'first_name': user.first_name,
 					'last_name': user.last_name,
 					'location': person.location,
-					'genres': genre_list,
+					'genres': person.genre.all(),
 					'instruments':instrument_list,
 					'quote':person.quote,
 					'soundcloud':embed_lst,}) #init fields, grab from db, from cache later
 	return render_to_response('Profile/EditProfile.html',{'form':form},
-								context_instance=RequestContext(request))
-
-
-
-
-
+							context_instance=RequestContext(request))
 
 
 	# 	return redirect('/profile/'+str(pk))

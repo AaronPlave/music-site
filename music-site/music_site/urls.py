@@ -7,7 +7,7 @@ admin.autodiscover()
 from django.contrib.auth.views import login, logout
 
 # from Auth import views as Auth_views
-# from registration.views import LoginView, SignupView #LogoutView
+from registration.views import logout_view
 
 #search results
 from home.views import ResultsView, ContactView, AboutView, BaseView
@@ -15,7 +15,11 @@ from home.views import ResultsView, ContactView, AboutView, BaseView
 #used in social-auth
 from django.views.generic import RedirectView
 
-from home.views import form2
+from home.views import form,form2
+
+from music_site import haystack_urls
+
+
 
 
 urlpatterns = patterns('',
@@ -59,11 +63,14 @@ urlpatterns = patterns('',
     #for every service you use, the login/**** is what you go to for our app to know which service to use
     # url(r'^login/$', redirect_to, {'url':'/login/github'}), 
 
-    # url(r'^accounts/logout/$',logout),
+    url(r'^accounts/logout/$',logout_view),
 
     url(r'', include('social_auth.urls')),
     url(r'^form2/$', form2, name='form2'),
-    url(r'^base/$',BaseView)
+    url(r'^form/$', form, name='form'),
+    url(r'^base/$',BaseView),
+    # url(r'^search/', include('music_site.haystack_urls')),
+    url(r'^search/$', include(haystack_urls)),
     
 )
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns

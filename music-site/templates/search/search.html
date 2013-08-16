@@ -45,6 +45,9 @@
                             </th>
                         </tr>
                     </table>
+                    {% if suggestion %}
+                        Did you mean <a href="/search/?q={{ suggestion }}"</a>{{suggestion}}</a> ?
+                    {% endif %}
 
                     {% if query %}
                         <h3>Found {{ page.object_list|length }} result{{ page.object_list|pluralize }}.</h3>

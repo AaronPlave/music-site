@@ -1,14 +1,16 @@
 TODO List
 
--Create all the views
--Work out the database models
+-creating users
+-Create all the error views
+-Work out the database models more
 -Work out privacy system for User-User contact
--Integrate 3rd party login system so that I won't have to deal with password stuff
--Soundcloud API for profile
+-Sessions
+-Fix that damn edit profile
 -Cache pages
--Styling views
+-Styling..
 -Autocomplete for searches
+-data optimizations for mobile, maybe hide soundcloud on initial page load, have button to load soundclouds.
 
 FUTURE:
 -If expanded from Wes, either add groups (like Wes, CCM, etc.) or Google Maps API for general location search. 
--Art deco background in b&w ? eh eh?
+-Art deco fonts

@@ -6,7 +6,6 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
-from registration.models import Temp_User
 from Profile.models import Profile,Genre,SoundCloud,Instruments
 import csv
 
@@ -15,12 +14,12 @@ class Populate_DB():
         """
         Populates User and Profile DBs.
         """
-        fields = ['first_name','last_name','email']
-        for row in csv.reader(open('/home/aaron/music_site_git/music_site/music_site/User_DB.csv')):
-        	Temp_User.objects.create(**dict(zip(fields,row)))
+        # fields = ['first_name','last_name','email']
+        # for row in csv.reader(open('/home/aaron/music_site_git/music_site/music_site/User_DB.csv')):
+        # 	Temp_User.objects.create(**dict(zip(fields,row)))
 
         fields = ['name']
-        for row in csv.reader(open('/home/aaron/music_site_git/music_site/music_site/Genre_DB.csv')):
+        for row in csv.reader(open('/home/aaron/music_site_git/music-site/music_site/Genre_DB.csv')):
         	Genre.objects.create(**dict(zip(fields,row)))
 
         # fields = ['url']
@@ -28,5 +27,5 @@ class Populate_DB():
         # 	SoundCloud.objects.create(**dict(zip(fields,row)))
 
         fields = ['name']
-        for row in csv.reader(open('/home/aaron/music_site_git/music_site/music_site/Instruments_DB.csv')):
+        for row in csv.reader(open('/home/aaron/music_site_git/music-site/music_site/Instruments_DB.csv')):
         	Instruments.objects.create(**dict(zip(fields,row)))

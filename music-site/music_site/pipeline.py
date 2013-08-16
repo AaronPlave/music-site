@@ -1,10 +1,12 @@
 from django.http import HttpResponseRedirect
-
+from oauth2 import Token
+from social_auth.backends.utils import build_consumer_oauth_request
+from social_auth.backends.facebook import FacebookAuth
 
 def redirect_to_form(*args, **kwargs):
     if not kwargs['request'].session.get('saved_username') and \
        kwargs.get('user') is None:
-        return HttpResponseRedirect('/about') #just for testing
+        return HttpResponseRedirect('/form/') #just for testing
 
 
 def username(request, *args, **kwargs):
@@ -17,7 +19,7 @@ def username(request, *args, **kwargs):
 
 def redirect_to_form2(*args, **kwargs):
     if not kwargs['request'].session.get('saved_first_name'):
-        return HttpResponseRedirect('/form2') #just for testing
+        return HttpResponseRedirect('/form2/') #just for testing
 
 
 def first_name(request, *args, **kwargs):
@@ -25,3 +27,18 @@ def first_name(request, *args, **kwargs):
         user = kwargs['user']
         user.first_name = request.session.get('saved_first_name')
         user.save()
+        
+def social_profile_image(user,*args, **kwargs):
+    provider = kwargs['backend'].name
+    try:
+        social_auth = user.social_auth.filter(provider=provider)[0]
+    except IndexError:
+        print "NO IMAGE"
+        return []
+
+    request = "https://graph.facebook.com/me/picture?width=200&access_token=%s" % \
+        social_auth.extra_data['access_token'] 
+    social_auth.extra_data['profile']  = request
+    social_auth.save()
+    # print social_auth.extra_data.profile
+    print request

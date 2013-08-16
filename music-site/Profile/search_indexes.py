@@ -3,7 +3,6 @@ from haystack import indexes
 from Profile.models import *
 
 class ProfileIndex(indexes.SearchIndex, indexes.Indexable):
-	print "CLASSING"
 	
 	text = indexes.CharField(document=True, use_template=True)
 	location = indexes.CharField(model_attr='location')
@@ -15,10 +14,8 @@ class ProfileIndex(indexes.SearchIndex, indexes.Indexable):
 
 
 	def get_model(self):
-		print "MODEL"
 		return Profile
 
 	def index_queryset(self, using=None):
 		"""Used when the entire index for model is updated."""
-		print "INDEX HERE!"
 		return self.get_model().objects.all()

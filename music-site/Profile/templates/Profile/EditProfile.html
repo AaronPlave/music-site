@@ -15,6 +15,7 @@
     <div class="container">
       <div class="span5 offset3">
         <div class="well">
+          {{ user.is_authenticated }}
           <form action="" method="post">
             <div class="field">
               {{ form.first_name.errors }}
@@ -28,13 +29,15 @@
             </div>
             <div class="field">
               {{ form.location.errors }}
-              <label for="id_message">Location:</label>
+              <label for="id_location">Location:</label>
               {{ form.location }}
             </div>
             <div class="field">
               {{ form.genres.errors }}
-              <label for="id_message">Genres:</label>
-              {{ form.genres }}
+              <label for="id_genre">Genres:</label>
+              {% for g in form.genres %}
+                {{ g }}
+              {% endfor %}
             </div>
             <div class="field">
               {{ form.instruments.errors }}
@@ -57,4 +60,11 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+<div>
+  {% for g in form.genres %}
+    <li>{{ g }}</li>
+  {% endfor %}
+</div>
 {% endblock content %}

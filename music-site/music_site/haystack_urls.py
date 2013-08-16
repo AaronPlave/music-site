@@ -1,9 +1,11 @@
-from django.conf.urls.defaults import *
-from haystack.views import SearchView
+from django.conf.urls import *
+from music_site.haystack_views import basic_search
 from haystack.query import SearchQuerySet
 
-sqs = SearchQuerySet().order_by('instruments')
+
+# sqs = SearchQuerySet().filter(content__startswith='examp')
+# sqs = sqs.filter(content__contains='examp'))
 
 urlpatterns = patterns('haystack.views',
-    url(r'^$', SearchView(searchqueryset=sqs),name='haystack_search'), 
+    url(r'^$', basic_search,name='haystack_search'), 
 )

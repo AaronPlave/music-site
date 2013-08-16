@@ -20,6 +20,7 @@
     <link href="http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,300,400,600,700,800"rel="stylesheet" type="text/css">
     <!-- <link rel="stylesheet" href="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap-combined.no-icons.min.css"> -->
+    {% block import %}{% endblock import %}
     <style type="text/css">
 
     /*Large desktop */
@@ -53,7 +54,7 @@
     /* Main body and headings */
       body {
         font-family: 'Open Sans',Helvetica,Arial,sans-serif;
-        background-image: url('/static/music_site/background_images/the_tree.jpg');
+        /*background-image: url('/static/music_site/the_tree.jpg');*/
         background-size: auto auto;
         background-repeat: no-repeat;
       }
@@ -121,7 +122,7 @@
     </style>
   </head>
 
-  <body>
+  {% block body_tag %} <body> {% endblock body_tag %}
     <!-- Add an "Are you sure you want to nav away from this page, if not done." -->
     
     <!-- Mobile-friendly navbar adapted from example. -->
@@ -139,22 +140,29 @@
             <a class="brand" href="/">Wes Jam</a>
 
             {% block nav-search %}
-            <form class="navbar-search pull-right" action="/results/" method="get">  
+            <form class="navbar-search pull-right" action="/search/" method="get">  
               <input type="text" class="search-query" name='q'>  
               <!-- <input type="submit" value="Search" class='btn'> -->
             </form>
             {% endblock nav-search %}
             <div class="nav-collapse collapse">
               <ul class="nav">
-                <li class="active"><a href="#">Home</a></li>
+                <li class="active"><a href="/">Home</a></li>
                 <li><a href="/about">About</a></li>
                 <li><a href="/contact">Contact</a></li>
                 <li><a href="/sign_up">Sign up,maybe do this as a popup?</a><li> 
               </ul>
             </div> <!--/.nav-collapse-->
-            <a class="brand" href="/login/facebook">Login with Facebook</a>
-            <a class="brand" href="/login/google">Login with Google</a>
-            <!-- MAKE THESE GO AWAY AFTER LOGIN!! -->
+            <div>
+
+              {% if user.is_authenticated %}
+                <a class="brand" href="/profile/{{ user.pk }}">Profile</a>
+                <a class="brand" href="/accounts/logout">Logout</a>
+              {% else %}
+                <a class="brand" href="/login/facebook">FB Login</a>
+                <a class="brand" href="/login/google">Google Login</a>
+              {% endif %}
+            </div>
           </div>
         </div>
       </div>
@@ -166,8 +174,8 @@
     <div class="container">
       <div class="row-fluid footer">
         <div class="span12">
-          <p>This work is licensed under the <a href="http://creativecommons.org/licensed/by-sa/3.0/">CC By-SA 3.0
-          </a>,without all the cruft that would otherwise be put at the bottom of the page.</p>
+         <!--  <p>This work is licensed under the <a href="http://creativecommons.org/licensed/by-sa/3.0/">CC By-SA 3.0
+          </a>,without all the cruft that would otherwise be put at the bottom of the page.</p> -->
         </div>
       </div>
     </div>

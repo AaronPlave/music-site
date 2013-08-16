@@ -10,7 +10,7 @@ from django.template import Context
 from Profile.models import Profile
 from django.template import RequestContext
 from django.core.context_processors import csrf
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from home.forms import ContactForm
 
 from django.http import HttpResponseRedirect
@@ -23,25 +23,19 @@ from django.contrib.messages.api import get_messages
 from social_auth import __version__ as version
 from social_auth.utils import setting
 
-
 # class HomeView(generic.DetailView):
 #     template_name = 'home/home.html'
 
 def HomeView(request):
-	t = get_template('home/home.html')
-	html = t.render(Context())
-	return HttpResponse(html)
+	return render(request,"home/home.html",{})
 
 def BaseView(request):
-	t = get_template('home/base.html')
-	html = t.render(Context())
-	return HttpResponse(html)
+	return render(request,"home/base.html",{})
 
 
 def AboutView(request):
-	t = get_template('home/about.html')
-	html = t.render(Context())
-	return HttpResponse(html)
+
+	return render(request,"home/about.html",{})
 
 def ContactView(request):
 
@@ -69,6 +63,7 @@ def ContactView(request):
 	return render_to_response('home/contact.html',{'form':form},
 								context_instance=RequestContext(request))
 
+#deprecated function, now use search.html with haystack
 def ResultsView(request):
 	"""Landing page for search results"""
 
@@ -97,8 +92,7 @@ def ResultsView(request):
 
 	#navigating to the /results/ page
 	else:
-		message = 'This page ain\'t big enough for the one of you, so gerroff\' this page'
-		return HttpResponse(message)
+		return HttpResponseRedirect("/")
 
 #stick this in results for error handling if ye (me) want(s).
 # {% if error %}
@@ -113,3 +107,16 @@ def form2(request):
 	    backend = request.session[name]['backend']
 	    return redirect('socialauth_complete', backend=backend)
 	return render_to_response('home/form2.html', {}, RequestContext(request))
+
+def form(request):
+    if request.method == 'POST' and request.POST.get('username'):
+        name = setting('SOCIAL_AUTH_PARTIAL_PIPELINE_KEY', 'partial_pipeline')
+        request.session['saved_username'] = request.POST['username']
+        backend = request.session[name]['backend']
+        return redirect('socialauth_complete', backend=backend)
+    return render_to_response('home/form.html', {}, RequestContext(request))
+
+# def logout(request):
+#     """Logs out user"""
+#     auth_logout(request)
+#     return HttpResponseRedirect('/')

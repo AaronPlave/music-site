@@ -34,6 +34,16 @@ DATABASES = {
     }
 }
 
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'haystack',
+        'TIMEOUT': 60 * 5,
+        'INCLUDE_SPELLING': True,
+    },
+}
+
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
@@ -195,6 +205,13 @@ SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
 SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 
 
+FACEBOOK_PROFILE_EXTRA_PARAMS = {'fields': 'picture'}
+FACEBOOK_EXTRA_DATA = [('profile', 'profile')]
+
+#can do this if on mobile?
+# FACEBOOK_AUTH_EXTRA_ARGUMENTS = {'display': 'touch'}
+
+
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/' #setup so have to be auth to see page
 LOGIN_ERROR_URL = '/login-error/'
@@ -212,6 +229,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.misc.save_status_to_session',
     'music_site.pipeline.redirect_to_form2',
     'music_site.pipeline.first_name',
+    'music_site.pipeline.social_profile_image',
 )
 
 
@@ -227,6 +245,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
+    'haystack',
     'home',
     'Profile',
     'registration',

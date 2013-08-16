@@ -23,7 +23,8 @@
 
   <div class="container">
     <div class="span5 asset">
-      <img class="img-polaroid" src="/static/music_site/480x300.gif">
+      <img class="img-polaroid" src="{{ picture_url }}">
+      {{ picture_url }}
     </div>
     <div class="span5 asset">
       {% if genres %}
@@ -63,6 +64,7 @@
     </div>
   </div>
 
+  {% if user.picture %}
   <div class="container">
     <div class="span5 asset">
       {% if soundcloud %}
@@ -76,6 +78,7 @@
       {% endif %}
     </div>
   </div>
+  {% endif %}
 
   <div class="container">
     <!-- Putting it under a CC By-SA 3.0 license. -->
@@ -88,81 +91,82 @@
     </div>
   </div>
 
-  <!-- only if on your own profile!  -->
-  <a href="edit" class="btn">Edit Profile CURRENT</a>
+  {% if user.owner %}
+    <a href="edit" class="btn">Edit Profile CURRENT</a>
 
-  <a href="#edit" role="button" class="btn" data-toggle="modal">Edit Profile OPTION</a>
+    <a href="#edit" role="button" class="btn" data-toggle="modal">Edit Profile OPTION</a>
 
     <!-- Modal1 -->
     
-    <div id="edit" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Edit Profile</h3>
-      </div>
-    
-      <div class="modal-body">
-    
-        <form id="InfroText" method="POST">
-    
-        <input type="hidden" name="InfroText" value="1">
-    
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                First Name
-              </td>
-              <td>
-                <input type="text" name="title" id="title" style="width:300px">
-                <span class="hide help-inline">Aaron</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Last Name
-              </td>
-              <td>
-                <input type="text" name="title" id="title" style="width:300px">
-                <span class="hide help-inline">Plave</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Location
-              </td>
-              <td>
-                <input type="text" name="title" id="title" style="width:300px">
-                <span class="hide help-inline">Wesleyan</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Class Year
-              </td>
-              <td>
-                <input type="text" name="title" id="title" style="width:300px">
-                <span class="hide help-inline">Aaron</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Instruments
-              </td>
-              <td>
-                <textarea name="instruments" style="width:300px;height:100px">
-                </textarea>
-              </td>
-            </tr>
-        </tbody>
-      </table>
-    </form>
-  </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <button class="btn btn-primary" data-dismiss="modal" id="InfroTextSubmit">Save changes</button>
-      </div>
-  </div>
+      <div id="edit" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">Edit Profile</h3>
+        </div>
+      
+        <div class="modal-body">
+      
+          <form id="InfroText" method="POST">
+      
+          <input type="hidden" name="InfroText" value="1">
+      
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  First Name
+                </td>
+                <td>
+                  <input type="text" name="title" id="title" style="width:300px">
+                  <span class="hide help-inline">Aaron</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Last Name
+                </td>
+                <td>
+                  <input type="text" name="title" id="title" style="width:300px">
+                  <span class="hide help-inline">Plave</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Location
+                </td>
+                <td>
+                  <input type="text" name="title" id="title" style="width:300px">
+                  <span class="hide help-inline">Wesleyan</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Class Year
+                </td>
+                <td>
+                  <input type="text" name="title" id="title" style="width:300px">
+                  <span class="hide help-inline">Aaron</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Instruments
+                </td>
+                <td>
+                  <textarea name="instruments" style="width:300px;height:100px">
+                  </textarea>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+          <button class="btn btn-primary" data-dismiss="modal" id="InfroTextSubmit">Save changes</button>
+        </div>
+    </div>
+  {% endif %}
 
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
   <script src="/static/music_site/soundcloud-custom-player-master/js/soundcloud.player.api.js" type="text/javascript"></script>
