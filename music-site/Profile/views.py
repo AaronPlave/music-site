@@ -67,11 +67,14 @@ def EditProfileView(request,pk): #secure way to do this?
 	user = User.objects.filter(pk=pk)[0]
 	person = Profile.objects.filter(User=user)[0]
 	genre_list = person.genre.values_list('name')
-	genre_dict = {}
-	for g in genre_list:
-		genre_dict
-	instruments = person.instruments.all()
+	genre_str = "\n".join([i[0] for i in genre_list])
+
+	instrument_list = person.instruments.values_list('name')
+	instrument_str = "\n".join([i[0] for i in instrument_list])
+	
 	sc_urls = person.soundcloud_set.all()
+	
+
 	embed_lst = SC_Embed(sc_urls)[1]
 
 	#form checking
@@ -98,16 +101,12 @@ def EditProfileView(request,pk): #secure way to do this?
 		else:
 			print "no"
 	else:
-		#these next two lines are quite silly, i'm sure there's a way to do this
-		instrument_list = [str(i.name) for i in instruments]
-		print len(genre_list),genre_list
-		for i in genre_list: print i
 		form = EditProfileForm(
 			initial={'first_name': user.first_name,
 					'last_name': user.last_name,
 					'location': person.location,
-					'genres': person.genre.all(),
-					'instruments':instrument_list,
+					'genres': genre_str,
+					'instruments':instrument_str,
 					'quote':person.quote,
 					'soundcloud':embed_lst,}) #init fields, grab from db, from cache later
 	return render_to_response('Profile/EditProfile.html',{'form':form},

@@ -34,8 +34,10 @@ def BaseView(request):
 
 
 def AboutView(request):
-
 	return render(request,"home/about.html",{})
+
+def SignupView(request):
+	return render(request,'registration/signup.html',{})
 
 def ContactView(request):
 

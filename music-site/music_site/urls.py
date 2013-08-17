@@ -7,10 +7,10 @@ admin.autodiscover()
 from django.contrib.auth.views import login, logout
 
 # from Auth import views as Auth_views
-from registration.views import logout_view
+from registration.views import logout_view, CreateUserView
 
 #search results
-from home.views import ResultsView, ContactView, AboutView, BaseView
+from home.views import ResultsView, ContactView, AboutView, BaseView, SignupView
 
 #used in social-auth
 from django.views.generic import RedirectView
@@ -52,7 +52,9 @@ urlpatterns = patterns('',
 
     # url(r'^logout/$',LogoutView),
 
-    # url(r'^signup/$',SignupView),
+    url(r'^sign_up/$',SignupView),
+
+    url(r'^create_profile/$',CreateUserView),
 
     url(r'^contact/$',ContactView),
 

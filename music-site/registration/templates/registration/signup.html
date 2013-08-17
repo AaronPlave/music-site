@@ -1,33 +1,18 @@
-<!DOCTYPE html>
+{% extends "site/base.html" %}
 
-<html>
-	<head>
-		<title>Signup</title>
-	<head>
-		
-<form method="post">
-	<h2>Signup</h2>	
-	<br>
-	<label> Username
-		<input type="text" name="username" value="{{username}}">
-		<type=text style="color: red">{{username_error}}<br>
-	</label>
+{% block title %}About{% endblock %}
 
-	<label> Password
-		<input type="password" name="password" value="{{password}}">
-		<type=text style="color: red">{{pass_error}}<br>
-	</label>
-
-	<label> Verify Password
-		<input type="password" name="verify" value="{{verify}}">
-		<type=text style="color: red">{{ver_error}}<br>
-	</label>
-
-	<label> Email (optional)
-		<input type="text" name="email" value="{{email}}">
-		<type=text style="color: red">{{email_error}}<br>
-	</label>
-	
-	<br>
-	<input type="submit">
-</form>
+{% block content %}
+	<div class="row-fluid well">
+		<div class="span12 offset">
+	  		<h1>
+	  			Sign-up
+	  		</h1>
+	  		<p>
+	  			Welcome to Wes Jam! Sign up through Google or Facebook to start doing things. Don't worry, it's just for authentication, not going to post anything on your Facebook wall or spam your email. Once you've signed in, create a profile and search away!
+	  		<p>
+	  		<a class="brand" href="/login/facebook">FB Login</a>
+            <a class="brand" href="/login/google">Google Login</a>		
+	  	</div>
+	</div>
+{% endblock %}

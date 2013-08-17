@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from oauth2 import Token
 from social_auth.backends.utils import build_consumer_oauth_request
 from social_auth.backends.facebook import FacebookAuth
+from social_auth.backends import google
 
 def redirect_to_form(*args, **kwargs):
     if not kwargs['request'].session.get('saved_username') and \
@@ -30,15 +31,19 @@ def first_name(request, *args, **kwargs):
         
 def social_profile_image(user,*args, **kwargs):
     provider = kwargs['backend'].name
+    print kwargs
     try:
         social_auth = user.social_auth.filter(provider=provider)[0]
     except IndexError:
         print "NO IMAGE"
         return []
 
-    request = "https://graph.facebook.com/me/picture?width=200&access_token=%s" % \
-        social_auth.extra_data['access_token'] 
-    social_auth.extra_data['profile']  = request
-    social_auth.save()
-    # print social_auth.extra_data.profile
-    print request
+    if provider == 'facebook':
+        request = "https://graph.facebook.com/me/picture?width=200&access_token=%s" % \
+            social_auth.extra_data['access_token']
+    # elif provider == 'google':
+    #     request =  kwargs['response']
+        social_auth.extra_data['profile']  = request
+        social_auth.save()
+        # print social_auth.extra_data.profile
+        print request

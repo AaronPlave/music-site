@@ -32,34 +32,28 @@ class EditProfileForm(forms.Form):
 	
 	def clean_genres(self):
 		genres = self.cleaned_data['genres']
-
 		#check for genres, BEST WAY TO REFERENCE DB? OK, maybe have a search bar, 
 		# autocomplete/search and select, if not there, OPTION to add, might be typo.
 		# maybe have a "did you mean"/include this in the autocomplete 
 		genre_list = genres.split()
 		db_genres = Genre.objects.values_list('name') #get from db, but cache list
 		db_genres = [n[0] for n in db_genres]
-		print genre_list
-		print db_genres
 		for g in genre_list:
 			print g
 			if g not in db_genres:
-				print g
-				raise forms.ValidationError("NOT IN DB!")
+				raise forms.ValidationError(g + "NOT IN DB!")
 		return genre_list
 
 	def clean_instruments(self):
 		instruments = self.cleaned_data['instruments']
-	
 
 		#check for instruments
 		instrument_list = instruments.split()
-		db_instruments = ['Sax','Piano'] #get from db
-		print instrument_list
+		db_instruments = Instruments.objects.values_list('name') #get from db, but cache list
+		db_instruments = [n[0] for n in db_instruments]
 		for g in instrument_list:
 			if g not in db_instruments:
-				print "Not in db"
-				raise forms.ValidationError("NOT IN DB!")
+				raise forms.ValidationError(g + " NOT IN DB!")
 		return instrument_list
 
 	def clean_sc_links(self):

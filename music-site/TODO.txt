@@ -1,15 +1,20 @@
 TODO List
 
--creating users
+-creating users:
+	-if new user, click sign up, login through google or fb, redirect to edit user page
+	-if user not new, just login
+-put css things into a css stylesheet, scripts into a scripts sheet, etc
 -Create all the error views
 -Work out the database models more
--Work out privacy system for User-User contact
+-Work out privacy system for User-User contact and who can see what (location, full name, email,etc.)
 -Sessions
+-profile pictures -- either none at all, just facebook grabbing and have google users (who don't usually have an image actually) just have none, default (wes + jam images) or upload a new one.
 -Fix that damn edit profile
 -Cache pages
 -Styling..
 -Autocomplete for searches
 -data optimizations for mobile, maybe hide soundcloud on initial page load, have button to load soundclouds.
+-add support for selection of field in search initially?
 
 FUTURE:
 -If expanded from Wes, either add groups (like Wes, CCM, etc.) or Google Maps API for general location search. 

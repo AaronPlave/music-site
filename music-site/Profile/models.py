@@ -12,6 +12,9 @@ class Genre(models.Model):
 	def __unicode__(self):
 		return unicode(self.name)
 
+	def __str__(self):
+		return str(self.name)
+
 class SoundCloud(models.Model):
 	#Assumes all urls are valid
 	url = models.CharField(max_length=300)
@@ -25,6 +28,9 @@ class Instruments(models.Model):
 
 	def __unicode__(self):
 		return unicode(self.name)
+		
+	def __str__(self):
+		return str(self.name)
 
 class Profile(models.Model):
 

@@ -3,6 +3,7 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
+<div class="well">
   <div class="container">
     <!-- Font and paired font of .heading/.subheading and body from Google Fonts -->
     <!-- www.google.com/fonts/specimen/Ubuntu -->
@@ -24,7 +25,6 @@
   <div class="container">
     <div class="span5 asset">
       <img class="img-polaroid" src="{{ picture_url }}">
-      {{ picture_url }}
     </div>
     <div class="span5 asset">
       {% if genres %}
@@ -64,7 +64,7 @@
     </div>
   </div>
 
-  {% if user.picture %}
+  {% if user.owner %}
   <div class="container">
     <div class="span5 asset">
       {% if soundcloud %}
@@ -166,6 +166,7 @@
           <button class="btn btn-primary" data-dismiss="modal" id="InfroTextSubmit">Save changes</button>
         </div>
     </div>
+  </div>
   {% endif %}
 
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>

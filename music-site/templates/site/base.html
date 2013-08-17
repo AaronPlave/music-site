@@ -19,6 +19,7 @@
     <script src="/static/music_site/BS2/js/bootstrap.js"></script>
     <link href="http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,300,400,600,700,800"rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
     <!-- <link rel="stylesheet" href="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap-combined.no-icons.min.css"> -->
     {% block import %}{% endblock import %}
     <style type="text/css">
@@ -26,7 +27,7 @@
     /*Large desktop */
     @media (min-width: 980px) {
       body {
-        padding-top: 60px;
+        padding-top: 20px;
       }
       .linediv-l {
         border-right:1px white solid;
@@ -37,7 +38,7 @@
     }
 
     /* Landscape phones and down */
-    @media (max-width: 480px) {
+    @media only screen and (max-width: 480px) {
       .copy {
         padding: 2.5% 10%;
       }
@@ -47,20 +48,65 @@
       .linediv-r {
         border-top: 1px white solid;
       }
+      html {
+        overflow: auto;
+      }
     }
 
     /* All form factors */
 
     /* Main body and headings */
+      html {
+        overflow-y: auto;
+        background-color: transparent;
+      }
       body {
+        background: url('/static/music_site/the_tree.jpg') no-repeat top left;
         font-family: 'Open Sans',Helvetica,Arial,sans-serif;
-        /*background-image: url('/static/music_site/the_tree.jpg');*/
-        background-size: auto auto;
+        overflow-y: hidden;
+        overflow-x: hidden;
         background-repeat: no-repeat;
+        /*background-position: center top;*/
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+      }
+
+      body:hover {
+        overflow-y: scroll;
+      }
+      /* Let's get this party started */
+      ::-webkit-scrollbar {
+          width: 8px;
+          height: 6px;
+          /*background: rgba(0,0,0,0.1);*/
+      }
+
+       
+      ::-webkit-scrollbar-button:start:decrement,
+      ::-webkit-scrollbar-button:end:increment {
+        height: 20px;
+        display: block;
+        background-color: transparent;
+        border-radius: 0px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        height: 300px;
+        background: rgba(0,0,0,0.3);
+        border: rgba(0,0,0,0.5);
+        -webkit-border-radius: 0px;
+      }
+  
+      ::-webkit-scrollbar-thumb:window-inactive {
+        background: rgba(0,0,0,0.1); 
       }
       .heading, .subheading {
         font-family: 'Ubuntu',Helvetica,Arial,sans-serif;
         text-align: center;
+
       }
       p.lead {
         padding-top: 1.5%;
@@ -72,36 +118,10 @@
         line-height: 24px;
       }
       
-      /* Video pitch and Action */
       .search {
         padding: 2.5% 0%;
         text-align: center;
-      }
-      .pitch {
-        padding: 2.5% 0%;
-      }
-      .order {
-        padding: 2% 0%;
-      }
-      .actions {
-        background-color: #343434;
-        padding: 3% 0%;
-      }
-      .video, .thermometer, .order, .social, .statistics {
-        text-align: center;
-      }
-      .statistics h3, .statistics p {
-        color: white;
-      }
-
-      /* Marketing Copy and Footer */
-      .copy {
-        padding-top: 2.5%;
-        padding-bottom: 2.5%;
-        text-align: justify;
-      }
-      .asset {
-        padding: 2.5% 0%;
+        border: 1px;
       }
       .footer {
         color: #cccccc;
@@ -113,7 +133,10 @@
         color: #ccccff;
       }
       .input-mysize { 
-        width: 70%;
+        width: 50%;
+      }
+      /*.input.button, .input.submit {
+        border: 11px;*/
       }
 
       /*FIX THIS LATER, MAKE DEDICATED STATIC CSS*/
@@ -129,7 +152,7 @@
     <!-- http://twitter.github.io/bootstrap/examples/starter-template.html -->
     <div class="container">
       {% block navbar %}
-      <div class ="navbar navbar-inverse navbar-fixed-top">
+      <div class ="navbar navbar-inverse">
         <div class="navbar-inner">
             <button type="button" class="btn btn-navbar" 
                     data-toggle="collapse" data-target=".nav-collapse">
@@ -150,7 +173,9 @@
                 <li class="active"><a href="/">Home</a></li>
                 <li><a href="/about">About</a></li>
                 <li><a href="/contact">Contact</a></li>
-                <li><a href="/sign_up">Sign up,maybe do this as a popup?</a><li> 
+                {% if not user.is_authenticated %}
+                <li><a href="/sign_up">Sign up</a><li> 
+                {% endif %}
               </ul>
             </div> <!--/.nav-collapse-->
             <div>
@@ -165,19 +190,26 @@
             </div>
           </div>
         </div>
-      </div>
       {% endblock navbar%}
-    </div>
     <div id="content">
       {% block content %}{% endblock %}
     </div>
-    <div class="container">
       <div class="row-fluid footer">
         <div class="span12">
-         <!--  <p>This work is licensed under the <a href="http://creativecommons.org/licensed/by-sa/3.0/">CC By-SA 3.0
-          </a>,without all the cruft that would otherwise be put at the bottom of the page.</p> -->
+          <p>Some sort of licensing thing here</p>
         </div>
       </div>
     </div>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="static/music_site/jQuery-slimScroll-1.1.0/jquery.slimscroll.min.js"></script>
+    <script type="text/javascript">
+    $(function(){
+      $('#scroll').slimscroll({
+        size: '8px'
+      });
+
+    });
+</script>
   </body>
 </html>

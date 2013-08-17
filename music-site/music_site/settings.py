@@ -208,6 +208,11 @@ SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 FACEBOOK_PROFILE_EXTRA_PARAMS = {'fields': 'picture'}
 FACEBOOK_EXTRA_DATA = [('profile', 'profile')]
 
+#google authentication working but not getting a valid response to get a prof pic...
+# GOOGLE_OAUTH2_PROFILE_EXTRA_PARAMS = {'fields': 'picture'}
+# GOOGLE_OAUTH2_EXTRA_DATA = [('profile', 'profile')]
+# GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/userinfo.email','https://www.googleapis.com/auth/userinfo.profile']
+
 #can do this if on mobile?
 # FACEBOOK_AUTH_EXTRA_ARGUMENTS = {'display': 'touch'}
 
@@ -215,6 +220,7 @@ FACEBOOK_EXTRA_DATA = [('profile', 'profile')]
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/' #setup so have to be auth to see page
 LOGIN_ERROR_URL = '/login-error/'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/create_profile/'
 
 SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.social.social_auth_user',
