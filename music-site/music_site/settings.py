@@ -220,7 +220,7 @@ FACEBOOK_EXTRA_DATA = [('profile', 'profile')]
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/' #setup so have to be auth to see page
 LOGIN_ERROR_URL = '/login-error/'
-SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/create_profile/'
+# SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/create_profile/'
 
 SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.social.social_auth_user',
@@ -236,6 +236,7 @@ SOCIAL_AUTH_PIPELINE = (
     'music_site.pipeline.redirect_to_form2',
     'music_site.pipeline.first_name',
     'music_site.pipeline.social_profile_image',
+    'music_site.pipeline.new_user_check',
 )
 
 

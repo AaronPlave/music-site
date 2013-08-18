@@ -1,16 +1,10 @@
 {% extends "site/base.html" %}
 
-{% block title %}Edit Profile{% endblock %}
+{% block title %}Create Profile{% endblock %}
 
 {% block content %}
 
-    <h1>Edit Profile</h1>
-
-    {% if form.errors %}
-        <p style="color: red;">
-            Please correct the error{{ form.errors|pluralize }} below.
-        </p>
-    {% endif %}
+    
 
     <div class="container">
       <div class="span5 offset3">
@@ -18,6 +12,13 @@
           <div style="color: red;">
             AUTH = {{ user.is_authenticated }}
           </div>
+          <h1>Create Profile</h1>
+
+          {% if form.errors %}
+              <p style="color: red;">
+                  Please correct the error{{ form.errors|pluralize }} below.
+              </p>
+          {% endif %}
           <form action="" method="post">
             <div class="field">
               {{ form.first_name.errors }}

@@ -35,9 +35,10 @@ def ProfileView(request,pk):
 	genres = person.genre.all()
 	instruments = person.instruments.all()
 	sc_urls = person.soundcloud_set.all()
-	embed_lst = SC_Embed(sc_urls)[1] #DEFINITELY CACHE THIS
+	embed_lst = [i.html for i in sc_urls]
 
 	print request.user.is_authenticated()
+	print embed_lst,"w"
 
 	#Check if user is owner of this Profile
 	if request.user.is_authenticated():
@@ -46,7 +47,7 @@ def ProfileView(request,pk):
 			print "same"
 			request.user.owner = True
 
-			#grab profile picture
+			#grab profile picture, if not, default image
 			provider = request.session['social_auth_last_login_backend']
 			print provider
 			picture =  request.user.social_auth.get(provider=provider).extra_data['profile']
@@ -66,49 +67,65 @@ def ProfileView(request,pk):
 def EditProfileView(request,pk): #secure way to do this?
 	user = User.objects.filter(pk=pk)[0]
 	person = Profile.objects.filter(User=user)[0]
+
 	genre_list = person.genre.values_list('name')
 	genre_str = "\n".join([i[0] for i in genre_list])
 
 	instrument_list = person.instruments.values_list('name')
 	instrument_str = "\n".join([i[0] for i in instrument_list])
-	
-	sc_urls = person.soundcloud_set.all()
-	
 
-	embed_lst = SC_Embed(sc_urls)[1]
+	sc_list = person.soundcloud_set.values_list('url')
+	sc_str = "\n".join([i[0] for i in sc_list])
+	
+	data_dict = {"genre_list":genre_list,
+				 "instrument_list":instrument_list,
+				 "sc_list":sc_list,
+				 "person":person,
+				 "new":False,
+				}
 
+	embed_lst = SC_Embed(sc_list)[1]
 	#form checking
 	errors = []
 	if request.method == 'POST':
 		print "POST"
-		form = EditProfileForm(request.POST)
+		form = EditProfileForm(request.POST,data_dict=data_dict)
 		if form.is_valid():
 			cd = form.cleaned_data
-			print cd
 
 			user.first_name = cd['first_name']
 			user.last_name = cd['last_name']
 			person.location = cd['location']
 
-			# person.genre = cd['genres'] #hmm.. how..
-			# person.instruments = cd['instruments']
-			# person.soundcloud_set = cd['sc_links']
-			person.quote = cd['quote']
-			user.save()
-			person.save()
+			genre_models = [Genre.objects.filter(name=i)[0] for i in cd['genres']] #MUST BE A BETTER WAY!!!?? DON'T WANT TO HIT DB EVERY TIME FOR THIS...
+			person.genre = genre_models
+
+			instruments_models = [Instruments.objects.filter(name=i)[0] for i in cd['instruments']]
+			person.instruments = instruments_models
+
+			sc_dict = cd['sc_links']
+			if sc_dict:
+				sc_models = [SC.objects.create(url=i,owner_id=person.pk,html=sc_dict[i]) for i in sc_dict.keys()]
+			# print sc_models,"HI"
+			# print person.soundcloud_set,person.soundcloud_set.all()
+				person.soundcloud_set = sc_models
+
+				person.quote = cd['quote']
+				user.save()
+				person.save()
 
 			return HttpResponseRedirect('/profile/'+str(pk))
 		else:
 			print "no"
 	else:
-		form = EditProfileForm(
+		form = EditProfileForm(data_dict=data_dict,
 			initial={'first_name': user.first_name,
 					'last_name': user.last_name,
 					'location': person.location,
 					'genres': genre_str,
 					'instruments':instrument_str,
 					'quote':person.quote,
-					'soundcloud':embed_lst,}) #init fields, grab from db, from cache later
+					'sc_links':sc_str,}) #init fields, grab from db, from cache later
 	return render_to_response('Profile/EditProfile.html',{'form':form},
 							context_instance=RequestContext(request))
 

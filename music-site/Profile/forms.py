@@ -5,6 +5,11 @@ from django.core import serializers
 
 
 class EditProfileForm(forms.Form):
+	def __init__(self,*args,**kwargs):
+		print 
+		self.data_dict = kwargs.pop('data_dict')
+		super(EditProfileForm,self).__init__(*args,**kwargs)
+
 	first_name = forms.CharField(max_length=30)
 	last_name = forms.CharField(max_length=30)
 	location = forms.CharField(max_length=30,required=False)
@@ -59,10 +64,79 @@ class EditProfileForm(forms.Form):
 	def clean_sc_links(self):
 		sc_links = self.cleaned_data['sc_links']
 		sc_list = sc_links.split()
-		sc = SC_Embed(sc_list)
+
+		#check for no links
+		if len(sc_list) == 0:
+			print "No links entered."
+			return False
+
+		if self.data_dict['new'] == True:
+			#remove any duplicates, method from http://stackoverflow.com/questions/480214/how-do-you-remove-duplicates-from-a-list-in-python-whilst-preserving-order
+			seen = set()
+			seen_add = seen.add
+			unique_sc_list = [ x for x in sc_list if x not in seen and not seen_add(x)]
+			print "hitting SC API"
+			sc = SC_Embed(unique_sc_list)
+
+			if sc[0] == False:
+				raise forms.ValidationError(str(sc[1]) + " cannot be processed.")
+			return sc[1]
+
+		person_sc_links = self.data_dict['sc_list']
+		person_sc_links = [i[0] for i in person_sc_links]
+
+		person = self.data_dict['person']
+
+		####TEMPORARY, later add a search bar for genres so users can input genres if none match requested genre
+		####add in case where there are no sc/are all deleted
+		#grab links to be deleted, identify new links, do nothing to old links
+		trash_links = []
+		new_sc_links = []
+		unchanged_sc_links = []
+
+
+		#case for no change between new and olds
+		if sc_list == person_sc_links:
+			print "no change"
+			return False
+
+
+		for l in sc_list: #current list
+			print l
+			if l in person_sc_links: #new list
+				unchanged_sc_links.append(l) #think i don't actually need this
+			else:
+				new_sc_links.append(l) 
+
+		#delete trash_links
+		# print person_sc_links ,"PERSON SC"
+		# print sc_links,"SC"
+		for l in person_sc_links:
+			if l not in sc_links:
+				# print l
+				# print person.soundcloud_set.filter(url=l[0])
+				count = 0
+				for i in person.soundcloud_set.filter(url=l):
+					person.soundcloud_set.filter(url=l).delete()
+					person.save() #do I need this?
+					count += 1
+
+		#check for no new links (already checked for no change), so this means 
+		#links have been deleted
+		if not new_sc_links:
+			print "Links have been removed"
+			return 
+			
+		print "hitting SC API"
+		sc = SC_Embed(new_sc_links)
+
 		if sc[0] == False:
 			raise forms.ValidationError(str(sc[1]) + " cannot be processed.")
-		return sc_list
+
+		# print unchanged_sc_links,"un"
+		# print new_sc_links,"new"
+		# print sc
+		return sc[1]
 
 	def clean_quote(self):
 		quote = self.cleaned_data['quote']

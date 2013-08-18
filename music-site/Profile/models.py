@@ -18,6 +18,10 @@ class Genre(models.Model):
 class SoundCloud(models.Model):
 	#Assumes all urls are valid
 	url = models.CharField(max_length=300)
+
+	##ADD A SC_EMBED FIELD!
+	html = models.CharField(max_length=300)
+	
 	owner = models.ForeignKey('Profile')
 
 	def __unicode__(self):
@@ -28,7 +32,7 @@ class Instruments(models.Model):
 
 	def __unicode__(self):
 		return unicode(self.name)
-		
+
 	def __str__(self):
 		return str(self.name)
 

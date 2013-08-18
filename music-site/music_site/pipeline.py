@@ -47,3 +47,9 @@ def social_profile_image(user,*args, **kwargs):
         social_auth.save()
         # print social_auth.extra_data.profile
         print request
+
+def new_user_check(user,*args,**kwargs):
+    print args,kwargs,user
+    print kwargs['new_association']
+    if kwargs['new_association'] == True:
+        return HttpResponseRedirect('/create_profile/')

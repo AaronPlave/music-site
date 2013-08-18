@@ -2,7 +2,7 @@ from django.contrib import admin
 from Profile.models import Profile,Genre,Instruments,SoundCloud
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['location','User'] 
+    list_display = ['pk','location','User'] 
     fields = ['location','User','genre','instruments','quote']#can change order of things on admin site he
     search_fields = ['location','User','genre','instruments'] #search bar
     list_filter = ['location','genre','instruments'] #sort list by x

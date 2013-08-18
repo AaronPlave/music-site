@@ -8,8 +8,9 @@ TODO List
 -Work out the database models more
 -Work out privacy system for User-User contact and who can see what (location, full name, email,etc.)
 -Sessions
--profile pictures -- either none at all, just facebook grabbing and have google users (who don't usually have an image actually) just have none, default (wes + jam images) or upload a new one.
--Fix that damn edit profile
+-profile pictures -- either none at all, just facebook grabbing and have google users (who don't usually have an image actually) just have none, default (wes + jam images) or upload a new one. SAVE PROFILE PICTURES IN DB, UPDATE EVERY LOGIN
+-Option to delete profile
+-Make the edit/create profile UI much better, add support for user defined genre/instrument entries
 -Cache pages
 -Styling..
 -Autocomplete for searches
@@ -18,4 +19,3 @@ TODO List
 
 FUTURE:
 -If expanded from Wes, either add groups (like Wes, CCM, etc.) or Google Maps API for general location search. 
--Art deco fonts
